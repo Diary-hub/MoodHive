@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis Website</title>
+    <link rel="stylesheet" href="{{ url_for('static',
+            filename='styles/style.css')}}">
+
+</head>
+
+<body>
+
+    <div class="warning-container">
+
+        <div class="warning-box" id="wake">
+            <h2>Jarvis</h2>
+            <p></p>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+            <h3 id="faceName"></h3>
+        </div>
+
+        <canvas id="canvas" style="display: none;"></canvas>
+
+
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script src="{{ url_for('static',
+        filename='JS/speechRecognition.js')}}">
+</script>
+
+<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+
+<script src="{{ url_for('static',
+        filename='JS/functions.js')}}">
+</script>
+
+
+<!--
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js">
+</script>
+ -->
+
+<!--
+<script>
+    var faceName = $("#Name");
+
+    Webcam.set({
+        width: 500,
+        height: 500,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach('#my_camera');
+
+
+    let a = async() => {
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        await delay(2000)
+
+
+    }
+
+
+    downloadImage = function(name, datauri) {
+        var a = document.createElement('a');
+        a.setAttribute('download', name + '.png');
+        a.setAttribute('href', datauri);
+        a.click();
+    }
+
+    function every(x) {
+        console.log('slaw')
+        let last = new Date().getTime();
+
+        (function loop() {
+            const now = new Date().getTime(),
+                delta = now - last;
+
+
+            if (delta >= x) {
+
+                Webcam.snap(function(data_uri) {
+                    downloadImage('arun', data_uri);
+
+                    // display results in page
+                    document.getElementById('results').innerHTML =
+                        '<img src="' + data_uri + '"/>';
+
+                    let msg = {
+                        message: data_uri
+                    };
+                    this.messages.push(msg);
+
+                    fetch("http://127.0.0.1:5000/WhoIsIt", {
+                            method: "POST",
+                            body: JSON.stringify({
+                                message: data_uri
+                            }),
+                            mode: "cors",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        })
+                        .then((r) => r.json())
+                        .then((r) => {
+                            let msg2 = {
+                                message: r.answer
+                            };
+                            this.messages.push(msg2);
+                            prevContent = r.answer;
+                            setName(r.answer);
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                        });
+
+
+                });
+                last = now;
+            }
+
+            window.requestAnimationFrame(loop);
+        })();
+
+
+    }
+
+
+    function setName(response) {
+
+        faceName.innerHTML = "The Name Is: " + response;
+    }
+
+    $(document).ready(function() {
+        every(2000)
+        faceName = querySelector("#Name");
+
+    });
+</script>
+ -->
+
+</html>
